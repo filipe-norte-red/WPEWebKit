@@ -2155,7 +2155,7 @@ bool HTMLMediaElement::isSafeToLoadURL(const URL& url, InvalidURLAction actionIf
         return false;
     }
 
-    if (!portAllowed(url)) {
+    if (!document().securityOrigin().isUnrestrictedPortsEnabled(url) && !portAllowed(url)) {
         if (actionIfInvalid == Complain) {
             if (frame)
                 FrameLoader::reportBlockedLoadFailed(*frame, url);

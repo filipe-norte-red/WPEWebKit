@@ -619,4 +619,9 @@ bool SecurityOrigin::isLocalHostOrLoopbackIPAddress(StringView host)
     return false;
 }
 
+bool SecurityOrigin::isUnrestrictedPortsEnabled(const URL& url) const
+{
+    return LegacySchemeRegistry::shouldTreatURLSchemeAsUnrestrictedPortsEnabled(url.protocol());
+}
+
 } // namespace WebCore

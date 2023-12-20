@@ -570,6 +570,9 @@ void WebProcess::initializeWebProcess(WebProcessCreationParameters&& parameters)
     for (auto& scheme : parameters.urlSchemesRegisteredAsCanDisplayOnlyIfCanRequest)
         registerURLSchemeAsCanDisplayOnlyIfCanRequest(scheme);
 
+    for (auto& scheme : parameters.urlSchemesRegisteredAsUnrestrictedPortsEnabled)
+        registerURLSchemeAsUnrestrictedPortsEnabled(scheme);
+
     setDefaultRequestTimeoutInterval(parameters.defaultRequestTimeoutInterval);
 
     setBackForwardCacheCapacity(parameters.backForwardCacheCapacity);
@@ -775,6 +778,11 @@ void WebProcess::registerURLSchemeAsCachePartitioned(const String& urlScheme) co
 void WebProcess::registerURLSchemeAsCanDisplayOnlyIfCanRequest(const String& urlScheme) const
 {
     LegacySchemeRegistry::registerAsCanDisplayOnlyIfCanRequest(urlScheme);
+}
+
+void WebProcess::registerURLSchemeAsUnrestrictedPortsEnabled(const String& urlScheme) const
+{
+    LegacySchemeRegistry::registerURLSchemeAsUnrestrictedPortsEnabled(urlScheme);
 }
 
 void WebProcess::setDefaultRequestTimeoutInterval(double timeoutInterval)

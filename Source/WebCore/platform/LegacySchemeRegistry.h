@@ -101,6 +101,10 @@ public:
     static bool shouldPartitionCacheForURLScheme(const String& scheme); // Thread safe.
 
     static bool isUserExtensionScheme(StringView scheme);
+
+    // Allow non-network related URL schemes to be registered to allow making requests without ports restrictions.
+    WEBCORE_EXPORT static void registerURLSchemeAsUnrestrictedPortsEnabled(const String& scheme);
+    WEBCORE_EXPORT static bool shouldTreatURLSchemeAsUnrestrictedPortsEnabled(const StringView& scheme);
 };
 
 } // namespace WebCore

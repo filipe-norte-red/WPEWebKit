@@ -1259,7 +1259,7 @@ void FrameLoader::loadFrameRequest(FrameLoadRequest&& request, Event* event, Ref
         return;
     }
 
-    if (!portAllowed(url)) {
+    if (!request.requesterSecurityOrigin().isUnrestrictedPortsEnabled(url) && !portAllowed(url)) {
         FRAMELOADER_RELEASE_LOG(ResourceLoading, "loadFrameRequest: canceling - port not allowed");
         reportBlockedLoadFailed(m_frame, url);
         return;

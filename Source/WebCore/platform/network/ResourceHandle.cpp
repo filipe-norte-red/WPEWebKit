@@ -85,7 +85,7 @@ ResourceHandle::ResourceHandle(NetworkingContext* context, const ResourceRequest
         return;
     }
 
-    if (!portAllowed(request.url())) {
+    if (!(d->m_sourceOrigin && d->m_sourceOrigin->isUnrestrictedPortsEnabled(request.url())) && !portAllowed(request.url())) {
         scheduleFailure(BlockedFailure);
         return;
     }

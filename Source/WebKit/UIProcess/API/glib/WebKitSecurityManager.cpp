@@ -47,7 +47,8 @@ typedef enum {
     SecurityPolicyDisplayIsolated,
     SecurityPolicySecure,
     SecurityPolicyCORSEnabled,
-    SecurityPolicyEmptyDocument
+    SecurityPolicyEmptyDocument,
+    SecurityPolicyUnrestrictedPorts
 } SecurityPolicy;
 
 struct _WebKitSecurityManagerPrivate {
@@ -100,6 +101,10 @@ static void registerSecurityPolicyForURIScheme(WebKitSecurityManager* manager, c
         WebCore::LegacySchemeRegistry::registerURLSchemeAsEmptyDocument(urlScheme);
         processPool.registerURLSchemeAsEmptyDocument(urlScheme);
         break;
+    case SecurityPolicyUnrestrictedPorts:
+        WebCore::LegacySchemeRegistry::registerURLSchemeAsUnrestrictedPortsEnabled(urlScheme);
+        processPool.registerURLSchemeAsUnrestrictedPortsEnabled(urlScheme);
+        break;
     }
 }
 
@@ -120,6 +125,8 @@ static bool checkSecurityPolicyForURIScheme(const char* scheme, SecurityPolicy p
         return WebCore::LegacySchemeRegistry::shouldTreatURLSchemeAsCORSEnabled(urlScheme);
     case SecurityPolicyEmptyDocument:
         return WebCore::LegacySchemeRegistry::shouldLoadURLSchemeAsEmptyDocument(urlScheme);
+    case SecurityPolicyUnrestrictedPorts:
+        return WebCore::LegacySchemeRegistry::shouldTreatURLSchemeAsUnrestrictedPortsEnabled(urlScheme);
     }
 
     return false;
@@ -346,4 +353,51 @@ gboolean webkit_security_manager_uri_scheme_is_empty_document(WebKitSecurityMana
     g_return_val_if_fail(scheme, FALSE);
 
     return checkSecurityPolicyForURIScheme(scheme, SecurityPolicyEmptyDocument);
+}
+
+/**
+ * webkit_security_manager_register_uri_scheme_as_unrestricted_ports_enabled:
+ * @security_manager: a #WebKitSecurityManager
+ * @scheme: a URI scheme
+ *
+ * Register @scheme as being allowed to make requests using any destination port
+ * when associated URI does not translate to a network request (e.g. http).
+ *
+ * This is useful for custom uri schemes that don't make direct network requests
+ * and for which the port might have a different meaning.
+ */
+void webkit_security_manager_register_uri_scheme_as_unrestricted_ports_enabled(WebKitSecurityManager* manager, const char* scheme)
+{
+    g_return_if_fail(WEBKIT_IS_SECURITY_MANAGER(manager));
+    g_return_if_fail(scheme);
+
+    String urlScheme = String::fromUTF8(scheme);
+
+    // Ignore schemes that imply network requests
+    g_return_if_fail(!equalIgnoringASCIICase(urlScheme, "http"_s));
+    g_return_if_fail(!equalIgnoringASCIICase(urlScheme, "https"_s));
+    g_return_if_fail(!equalIgnoringASCIICase(urlScheme, "ws"_s));
+    g_return_if_fail(!equalIgnoringASCIICase(urlScheme, "wss"_s));
+
+    registerSecurityPolicyForURIScheme(manager, scheme, SecurityPolicyUnrestrictedPorts);
+}
+
+/**
+ * webkit_security_manager_uri_scheme_is_unrestricted_ports_enabled:
+ * @security_manager: a #WebKitSecurityManager
+ * @scheme: a URI scheme
+ *
+ * Whether @scheme is considered as being allowed to make requests using any
+ * destination port
+ *
+ * See also webkit_security_manager_register_uri_scheme_as_unrestricted_ports_enabled().
+ *
+ * Returns: %TRUE if @scheme allowed to make requests to any destination port or %FALSE otherwise.
+ */
+gboolean webkit_security_manager_uri_scheme_is_unrestricted_ports_enabled(WebKitSecurityManager* manager, const char* scheme)
+{
+    g_return_val_if_fail(WEBKIT_IS_SECURITY_MANAGER(manager), FALSE);
+    g_return_val_if_fail(scheme, FALSE);
+
+    return checkSecurityPolicyForURIScheme(scheme, SecurityPolicyUnrestrictedPorts);
 }

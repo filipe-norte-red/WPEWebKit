@@ -136,7 +136,7 @@ bool FrameLoader::SubframeLoader::pluginIsLoadable(const URL& url)
             return false;
         }
 
-        if (!portAllowed(url)) {
+        if (!document->securityOrigin().isUnrestrictedPortsEnabled(url) && !portAllowed(url)) {
             FrameLoader::reportBlockedLoadFailed(m_frame, url);
             return false;
         }
@@ -268,7 +268,7 @@ RefPtr<Frame> FrameLoader::SubframeLoader::loadSubframe(HTMLFrameOwnerElement& o
         return nullptr;
     }
 
-    if (!portAllowed(url)) {
+    if (!document->securityOrigin().isUnrestrictedPortsEnabled(url) && !portAllowed(url)) {
         FrameLoader::reportBlockedLoadFailed(m_frame, url);
         return nullptr;
     }

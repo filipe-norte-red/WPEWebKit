@@ -207,6 +207,9 @@ public:
 
     WEBCORE_EXPORT static bool isLocalHostOrLoopbackIPAddress(StringView);
 
+    // Returns true if this SecurityOrigin can have access to all ports
+    WEBCORE_EXPORT bool isUnrestrictedPortsEnabled(const URL&) const;
+
     const SecurityOriginData& data() const { return m_data; }
 
     template<class Encoder> void encode(Encoder&) const;

@@ -429,6 +429,7 @@ private:
     void registerURLSchemeAsAlwaysRevalidated(const String&) const;
     void registerURLSchemeAsCachePartitioned(const String&) const;
     void registerURLSchemeAsCanDisplayOnlyIfCanRequest(const String&) const;
+    void registerURLSchemeAsUnrestrictedPortsEnabled(const String& urlScheme) const;
 
     void setDefaultRequestTimeoutInterval(double);
     void setAlwaysUsesComplexTextCodePath(bool);

@@ -676,7 +676,7 @@ void DocumentLoader::willSendRequest(ResourceRequest&& newRequest, const Resourc
             cancelMainResourceLoad(frameLoader()->cancelledError(newRequest));
             return completionHandler(WTFMove(newRequest));
         }
-        if (!portAllowed(newRequest.url())) {
+        if (!redirectingOrigin.get().isUnrestrictedPortsEnabled(newRequest.url()) && !portAllowed(newRequest.url())) {
             DOCUMENTLOADER_RELEASE_LOG("willSendRequest: canceling - redirecting to a URL with a blocked port");
             if (m_frame)
                 FrameLoader::reportBlockedLoadFailed(*m_frame, newRequest.url());

@@ -154,7 +154,7 @@ void ResourceLoader::init(ResourceRequest&& clientRequest, CompletionHandler<voi
         return completionHandler(false);
     }
 
-    if (!portAllowed(clientRequest.url())) {
+    if (!m_frame->document()->securityOrigin().isUnrestrictedPortsEnabled(clientRequest.url()) && !portAllowed(clientRequest.url())) {
         RESOURCELOADER_RELEASE_LOG("init: Cancelling load to a blocked port.");
         FrameLoader::reportBlockedLoadFailed(*m_frame, clientRequest.url());
         releaseResources();

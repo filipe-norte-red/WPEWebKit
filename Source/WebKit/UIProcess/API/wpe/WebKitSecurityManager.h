@@ -58,55 +58,63 @@ struct _WebKitSecurityManagerClass {
 };
 
 WEBKIT_API GType
-webkit_security_manager_get_type                                (void);
+webkit_security_manager_get_type                                            (void);
 
 WEBKIT_API void
-webkit_security_manager_register_uri_scheme_as_local            (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_register_uri_scheme_as_local                        (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API gboolean
-webkit_security_manager_uri_scheme_is_local                     (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_uri_scheme_is_local                                 (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API void
-webkit_security_manager_register_uri_scheme_as_no_access        (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_register_uri_scheme_as_no_access                    (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API gboolean
-webkit_security_manager_uri_scheme_is_no_access                 (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_uri_scheme_is_no_access                             (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API void
-webkit_security_manager_register_uri_scheme_as_display_isolated (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_register_uri_scheme_as_display_isolated             (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API gboolean
-webkit_security_manager_uri_scheme_is_display_isolated          (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_uri_scheme_is_display_isolated                      (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API void
-webkit_security_manager_register_uri_scheme_as_secure           (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_register_uri_scheme_as_secure                       (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API gboolean
-webkit_security_manager_uri_scheme_is_secure                    (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_uri_scheme_is_secure                                (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API void
-webkit_security_manager_register_uri_scheme_as_cors_enabled     (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_register_uri_scheme_as_cors_enabled                 (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API gboolean
-webkit_security_manager_uri_scheme_is_cors_enabled              (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_uri_scheme_is_cors_enabled                          (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API void
-webkit_security_manager_register_uri_scheme_as_empty_document   (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_register_uri_scheme_as_empty_document               (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 WEBKIT_API gboolean
-webkit_security_manager_uri_scheme_is_empty_document            (WebKitSecurityManager *security_manager,
-                                                                 const gchar           *scheme);
+webkit_security_manager_uri_scheme_is_empty_document                        (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
+
+WEBKIT_API void
+webkit_security_manager_register_uri_scheme_as_unrestricted_ports_enabled   (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
+
+WEBKIT_API gboolean
+webkit_security_manager_uri_scheme_is_unrestricted_ports_enabled            (WebKitSecurityManager *security_manager,
+                                                                             const gchar           *scheme);
 
 G_END_DECLS
 

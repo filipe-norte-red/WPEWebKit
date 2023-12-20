@@ -41,6 +41,7 @@ messages -> WebProcess LegacyReceiver NotRefCounted {
     RegisterURLSchemeAsCORSEnabled(String scheme)
     RegisterURLSchemeAsCachePartitioned(String scheme)
     RegisterURLSchemeAsCanDisplayOnlyIfCanRequest(String scheme)
+    RegisterURLSchemeAsUnrestrictedPortsEnabled(String scheme)
 
     SetDefaultRequestTimeoutInterval(double timeoutInterval)
     SetAlwaysUsesComplexTextCodePath(bool alwaysUseComplexText)

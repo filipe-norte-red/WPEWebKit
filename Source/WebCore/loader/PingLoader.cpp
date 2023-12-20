@@ -90,7 +90,7 @@ void PingLoader::loadImage(Frame& frame, const URL& url)
         return;
     }
 
-    if (!portAllowed(url)) {
+    if (!document.securityOrigin().isUnrestrictedPortsEnabled(url) && !portAllowed(url)) {
         FrameLoader::reportBlockedLoadFailed(frame, url);
         return;
     }

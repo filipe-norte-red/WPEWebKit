@@ -809,6 +809,7 @@ void WebProcessPool::initializeNewWebProcess(WebProcessProxy& process, WebsiteDa
     parameters.urlSchemesRegisteredAsAlwaysRevalidated = copyToVector(m_schemesToRegisterAsAlwaysRevalidated);
     parameters.urlSchemesRegisteredAsCachePartitioned = copyToVector(m_schemesToRegisterAsCachePartitioned);
     parameters.urlSchemesRegisteredAsCanDisplayOnlyIfCanRequest = copyToVector(m_schemesToRegisterAsCanDisplayOnlyIfCanRequest);
+    parameters.urlSchemesRegisteredAsUnrestrictedPortsEnabled = copyToVector(m_schemesToRegisterAsUnrestrictedPortsEnabled);
 
     parameters.shouldAlwaysUseComplexTextCodePath = m_alwaysUsesComplexTextCodePath;
     parameters.shouldUseFontSmoothing = m_shouldUseFontSmoothing;
@@ -1350,6 +1351,12 @@ void WebProcessPool::registerURLSchemeAsCORSEnabled(const String& urlScheme)
 {
     m_schemesToRegisterAsCORSEnabled.add(urlScheme);
     sendToAllProcesses(Messages::WebProcess::RegisterURLSchemeAsCORSEnabled(urlScheme));
+}
+
+void WebProcessPool::registerURLSchemeAsUnrestrictedPortsEnabled(const String& urlScheme)
+{
+    m_schemesToRegisterAsUnrestrictedPortsEnabled.add(urlScheme);
+    sendToAllProcesses(Messages::WebProcess::RegisterURLSchemeAsUnrestrictedPortsEnabled(urlScheme));
 }
 
 void WebProcessPool::registerGlobalURLSchemeAsHavingCustomProtocolHandlers(const String& urlScheme)

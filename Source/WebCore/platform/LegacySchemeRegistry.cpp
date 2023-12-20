@@ -538,4 +538,25 @@ bool LegacySchemeRegistry::isBuiltinScheme(const String& scheme)
     return !scheme.isNull() && (allBuiltinSchemes().contains(scheme) || WTF::URLParser::isSpecialScheme(scheme));
 }
 
+static URLSchemesMap& unrestrictedPortsURLSchemes() WTF_REQUIRES_LOCK(schemeRegistryLock)
+{
+    ASSERT(schemeRegistryLock.isHeld());
+    static NeverDestroyed<URLSchemesMap> unrestrictedPortsURLSchemes;
+    return unrestrictedPortsURLSchemes;
+}
+
+void LegacySchemeRegistry::registerURLSchemeAsUnrestrictedPortsEnabled(const String& scheme)
+{
+    ASSERT(!isInNetworkProcess());
+    if (scheme.isNull())
+        return;
+    unrestrictedPortsURLSchemes().add(scheme);
+}
+
+bool LegacySchemeRegistry::shouldTreatURLSchemeAsUnrestrictedPortsEnabled(const StringView& scheme)
+{
+    ASSERT(!isInNetworkProcess());
+    return !scheme.isNull() && unrestrictedPortsURLSchemes().contains<StringViewHashTranslator>(scheme);
+}
+
 } // namespace WebCore

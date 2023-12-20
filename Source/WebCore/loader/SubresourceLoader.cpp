@@ -297,7 +297,7 @@ void SubresourceLoader::willSendRequestInternal(ResourceRequest&& newRequest, co
             return completionHandler(WTFMove(newRequest));
         }
 
-        if (!portAllowed(newRequest.url())) {
+        if (!(m_origin && m_origin->isUnrestrictedPortsEnabled(newRequest.url())) && !portAllowed(newRequest.url())) {
             SUBRESOURCELOADER_RELEASE_LOG("willSendRequestInternal: resource load (redirect) canceled because it attempted to use a blocked port");
             if (m_frame)
                 FrameLoader::reportBlockedLoadFailed(*m_frame, newRequest.url());

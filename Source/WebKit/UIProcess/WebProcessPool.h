@@ -272,6 +272,7 @@ public:
     void registerURLSchemeAsCORSEnabled(const String&);
     void registerURLSchemeAsCachePartitioned(const String&);
     void registerURLSchemeAsCanDisplayOnlyIfCanRequest(const String&);
+    void registerURLSchemeAsUnrestrictedPortsEnabled(const String&);
 
     VisitedLinkStore& visitedLinkStore() { return m_visitedLinkStore.get(); }
 
@@ -663,6 +664,7 @@ private:
     HashSet<String> m_schemesToRegisterAsAlwaysRevalidated;
     HashSet<String> m_schemesToRegisterAsCachePartitioned;
     HashSet<String> m_schemesToRegisterAsCanDisplayOnlyIfCanRequest;
+    HashSet<String> m_schemesToRegisterAsUnrestrictedPortsEnabled;
 
     bool m_alwaysUsesComplexTextCodePath { false };
     bool m_shouldUseFontSmoothing { true };
