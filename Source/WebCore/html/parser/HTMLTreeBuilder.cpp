@@ -718,6 +718,12 @@ void HTMLTreeBuilder::processStartTagForInBody(AtomHTMLToken&& token)
         if (!pluginContentIsAllowed(m_tree.parserContentPolicy()))
             return;
     }
+    if (token.selfClosing() && token.name() == objectTag) {
+        m_tree.reconstructTheActiveFormattingElements();
+        m_tree.insertSelfClosingHTMLElement(WTFMove(token));
+        m_framesetOk = false;
+        return;
+    }
     if (token.name() == appletTag || token.name() == marqueeTag || token.name() == objectTag) {
         m_tree.reconstructTheActiveFormattingElements();
         m_tree.insertHTMLElement(WTFMove(token));
